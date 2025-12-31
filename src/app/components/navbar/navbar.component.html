@@ -1,0 +1,15 @@
+<nav class="navbar" *ngIf="authService.isLoggedIn()">
+  <div class="navbar-brand">
+    <a routerLink="/">HR 管理系統</a>
+  </div>
+
+  <div class="navbar-user">
+    <span class="username">
+      👤 {{ authService.getCurrentUser()?.name }}
+    </span>
+    
+    <button class="btn-logout" (click)="logout()">
+      登出
+    </button>
+  </div>
+</nav>

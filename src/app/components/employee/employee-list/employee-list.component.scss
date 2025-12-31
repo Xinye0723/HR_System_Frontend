@@ -1,0 +1,186 @@
+// 變數定義 (方便統一管理顏色)
+$primary-color: #1976d2;
+$danger-color: #dc3545;
+$success-color: #28a745;
+$gray-light: #f8f9fa;
+$border-color: #e9ecef;
+
+.page-container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+.header-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+
+  h2 {
+    color: #333;
+    font-size: 1.5rem;
+    margin: 0;
+  }
+
+  .btn-add {
+    background: $primary-color;
+    color: white;
+    text-decoration: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 6px;
+    font-weight: 500;
+    transition: all 0.3s;
+    box-shadow: 0 2px 4px rgba($primary-color, 0.3);
+
+    &:hover {
+      background: darken($primary-color, 10%);
+      transform: translateY(-1px);
+    }
+  }
+}
+
+// 表格容器樣式
+.table-container {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  overflow: hidden; // 圓角溢出隱藏
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    
+    th {
+      background: $gray-light;
+      color: #666;
+      font-weight: 600;
+      text-align: left;
+      padding: 1rem;
+      border-bottom: 2px solid $border-color;
+    }
+
+    td {
+      padding: 1rem;
+      border-bottom: 1px solid $border-color;
+      vertical-align: middle;
+      color: #444;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+  }
+}
+
+// 姓名欄位的細節
+.user-info {
+  display: flex;
+  flex-direction: column;
+  .name { font-weight: 500; color: #333; }
+  .eng-name { color: #888; font-size: 0.85rem; }
+}
+
+// 標籤樣式 (Badge)
+.badge {
+  padding: 0.25rem 0.6rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 500;
+
+  &.role {
+    background: #e3f2fd;
+    color: #0d47a1;
+    &.admin { background: #e8eaf6; color: #303f9f; }
+  }
+
+  &.status {
+    &.active { background: #e8f5e9; color: $success-color; }
+    &.inactive { background: #ffebee; color: $danger-color; }
+  }
+}
+
+// 按鈕區
+.actions-cell {
+  white-space: nowrap;
+  
+  .btn-icon {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.4rem;
+    font-size: 1.1rem;
+    transition: transform 0.2s;
+    opacity: 0.7;
+
+    &:hover {
+      transform: scale(1.2);
+      opacity: 1;
+    }
+
+    &.delete:hover { filter: drop-shadow(0 0 2px red); }
+  }
+}
+
+// Loading 動畫
+.loading-state {
+  text-align: center;
+  padding: 3rem;
+  color: #666;
+  .spinner {
+    width: 40px; height: 40px;
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid $primary-color;
+    border-radius: 50%;
+    margin: 0 auto 1rem;
+    animation: spin 1s linear infinite;
+  }
+}
+@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+
+// 📱 RWD 手機版樣式 (關鍵！)
+@media (max-width: 768px) {
+  .table-container {
+    background: transparent;
+    box-shadow: none;
+    
+    thead { display: none; } // 隱藏表頭
+
+    tbody, tr, td { display: block; width: 100%; }
+
+    tr {
+      background: white;
+      margin-bottom: 1rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      padding: 1rem;
+      position: relative;
+    }
+
+    td {
+      padding: 0.5rem 0;
+      border: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      text-align: right;
+
+      // 使用 data-label 屬性來顯示標題
+      &:before {
+        content: attr(data-label);
+        font-weight: 600;
+        color: #888;
+        font-size: 0.9rem;
+      }
+    }
+
+    // 調整手機版的操作按鈕位置
+    .actions-cell {
+      margin-top: 1rem;
+      border-top: 1px solid #eee;
+      padding-top: 1rem;
+      justify-content: flex-end;
+    }
+  }
+}

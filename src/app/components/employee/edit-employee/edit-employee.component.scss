@@ -1,0 +1,132 @@
+// 基本上與 AddEmployee 相同，可以直接複製過來，這裡補充差異部分
+
+.form-container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+  h2 {
+    color: #333;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    border-bottom: 2px solid #f0f0f0;
+    padding-bottom: 1rem;
+  }
+}
+
+.form-row {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 1rem;
+  }
+}
+
+.form-group {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+
+  label {
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: #555;
+    .required { color: red; }
+  }
+
+  // 針對 disabled (工號) 的樣式
+  input:disabled {
+    background-color: #e9ecef;
+    cursor: not-allowed;
+    color: #6c757d;
+  }
+
+  input, select {
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+    &:focus {
+      outline: none;
+      border-color: #1976d2;
+      box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.2);
+    }
+  }
+}
+
+.checkbox-group {
+  flex-direction: row;
+  align-items: center;
+  gap: 1rem;
+  
+  // Toggle Switch 樣式 (同前)
+  .switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 24px;
+    input { opacity: 0; width: 0; height: 0; }
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-color: #ccc;
+      transition: .4s;
+      border-radius: 24px;
+      &:before {
+        position: absolute;
+        content: "";
+        height: 16px;
+        width: 16px;
+        left: 4px;
+        bottom: 4px;
+        background-color: white;
+        transition: .4s;
+        border-radius: 50%;
+      }
+    }
+    input:checked + .slider { background-color: #2196F3; }
+    input:checked + .slider:before { transform: translateX(26px); }
+  }
+}
+
+.form-actions {
+  text-align: center;
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+  gap: 1rem; // 按鈕之間的間距
+
+  .btn-submit {
+    background-color: #1976d2;
+    color: white;
+    padding: 0.8rem 3rem;
+    border: none;
+    border-radius: 4px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    &:hover { background-color: #1565c0; }
+    &:disabled { background-color: #ccc; cursor: not-allowed; }
+  }
+
+  // 新增取消按鈕樣式
+  .btn-cancel {
+    background-color: #6c757d;
+    color: white;
+    padding: 0.8rem 2rem;
+    border: none;
+    border-radius: 4px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    text-decoration: none; // 如果是用 a tag
+    &:hover { background-color: #5a6268; }
+  }
+}
