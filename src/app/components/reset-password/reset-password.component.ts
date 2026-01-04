@@ -25,9 +25,11 @@ export class ResetPasswordComponent implements OnInit {
   private router = inject(Router);
   private authService = inject(AuthService);
 
-  // 定義表單，並掛上自定義的驗證器 (validators 選項)
+  // [修改] 新增 code 欄位
   resetForm: FormGroup = this.fb.group(
     {
+      email: ['', [Validators.required, Validators.email]], // 讓使用者可以看到/修改 Email
+      code: ['', [Validators.required, Validators.minLength(6)]], // 驗證碼欄位
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', [Validators.required]],
     },
@@ -42,13 +44,11 @@ export class ResetPasswordComponent implements OnInit {
   showConfirmPassword = false;
 
   ngOnInit(): void {
+    // [修改] 嘗試自動填入 Email，但不需要檢查 Token 了 (因為改成手動輸入)
     this.route.queryParams.subscribe((params) => {
-      this.token = params['token'];
-      this.email = params['email'];
-
-      if (!this.token || !this.email) {
-        Swal.fire('錯誤', '無效的重設連結', 'error');
-        this.router.navigate(['/login']);
+      const emailParam = params['email'];
+      if (emailParam) {
+        this.resetForm.patchValue({ email: emailParam });
       }
     });
   }
@@ -86,11 +86,11 @@ export class ResetPasswordComponent implements OnInit {
     if (this.resetForm.invalid) return;
 
     // 這裡不需要再手動檢查密碼一致性了，因為上面的 validator 已經做了
-    const { password } = this.resetForm.value;
+    const { email, code, password } = this.resetForm.value;
 
     const data = {
-      email: this.email,
-      token: this.token,
+      email: email,
+      code: code,
       newPassword: password,
     };
 
@@ -107,7 +107,9 @@ export class ResetPasswordComponent implements OnInit {
       },
       error: (err) => {
         console.error(err);
-        Swal.fire('失敗', '重設密碼失敗 (可能是連結已過期)', 'error');
+        // [提示] 顯示更具體的錯誤
+        const msg = err.error?.message || err.error || '重設密碼失敗';
+        Swal.fire('失敗', msg, 'error');
       },
     });
   }

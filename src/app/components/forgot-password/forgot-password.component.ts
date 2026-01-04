@@ -40,7 +40,7 @@ export class ForgotPasswordComponent {
           confirmButtonText: '回登入頁', // 修改按鈕文字，引導使用者
         }).then(() => {
           // 3. 使用者按下「好的」之後，帶他回登入頁
-          this.router.navigate(['/login']);
+          this.router.navigate(['/reset-password'], { queryParams: { email: email } });
         });
       },
       error: (err) => {

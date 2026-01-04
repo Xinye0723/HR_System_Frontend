@@ -52,12 +52,14 @@ export class AuthService {
     const userStr = localStorage.getItem(this.USER_KEY);
     return userStr ? JSON.parse(userStr) : null;
   }
-  // 1. 發送忘記密碼請求 (傳 Email)
+  // 1. 發送忘記密碼請求
   forgotPassword(email: string): Observable<any> {
     return this.http.post(this.forgotPasswordUrl, { email });
   }
-  // 2. 發送重設密碼請求 (傳 Email, Token, 新密碼)
-  resetPassword(data: { email: string; token: string; newPassword: string }): Observable<any> {
+
+  // 2. 發送重設密碼請求
+  // [修正] 這裡參數改為 code，確保送出的 JSON key 是 "code" 而不是 "token"
+  resetPassword(data: { email: string; code: string; newPassword: string }): Observable<any> {
     return this.http.post(this.resetPasswordUrl, data);
   }
 }

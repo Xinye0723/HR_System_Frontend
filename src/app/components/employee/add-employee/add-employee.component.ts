@@ -51,7 +51,7 @@ export class AddEmployeeComponent {
     const formData = this.employeeForm.value;
 
     // 加入預設密碼 (如果後端沒有預設的話)
-    const submitData = { ...formData, password: 'defaultPassword123' };
+    const submitData = { ...formData, password: '1234' };
 
     this.employeeService.createEmployee(submitData).subscribe({
       next: (res) => {
